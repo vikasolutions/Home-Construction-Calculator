@@ -96,6 +96,7 @@ td:last-child,th:last-child{text-align:right}
 .ad-placement-placeholder{display:none}
 .ad-horizontal.ad-preview{display:flex;min-height:100px;align-items:center;justify-content:center}
 .ad-horizontal.ad-preview .ad-placement-placeholder{display:block}
+.ad-horizontal.hide{display:none}
 .adsbygoogle{display:block;width:100%;min-height:inherit}
 .premium{background:var(--soft);border:1px solid var(--accent);border-radius:14px;padding:14px}
 .premium h3{margin:0 0 6px}
@@ -469,6 +470,7 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
       ["Bricks", num.format(totalArea*m.bricks)+" nos"]
     ];
     $("materials").innerHTML = rows.map(function(r){return "<tr><td>"+r[0]+"</td><td>"+r[1]+"</td></tr>"}).join("");
+    $("defaultAd").classList.add("hide");
     $("costResult").style.display = "block";
     if(location.protocol === "http:" || location.protocol === "https:"){
       setupAd($("resultAd"),ADSENSE_CONFIG.resultSlotId,"auto");
