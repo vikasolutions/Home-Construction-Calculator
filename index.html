@@ -88,6 +88,7 @@ td:last-child,th:last-child{text-align:right}
 .breakdown-color-6{background:var(--breakdown-7)}
 .note{font-size:.82rem;color:var(--muted)}
 .ad{min-height:90px;border:1px dashed var(--line);border-radius:10px;padding:18px;text-align:center;color:var(--muted);font-size:.85rem;margin:14px 0}
+.ad:not(.ad-active){display:none}
 .adsbygoogle{display:block;min-height:90px}
 .premium{background:var(--soft);border:1px solid var(--accent);border-radius:14px;padding:14px}
 .premium h3{margin:0 0 6px}
@@ -104,7 +105,10 @@ footer{max-width:920px;margin:0 auto;padding:0 16px 30px;color:var(--muted);font
   .breakdown-table th,.breakdown-table td{padding:7px 3px;font-size:.8rem}
   .grid>div>label,.grid>div>.field-label-row{height:auto;min-height:0}
   .cost-accordion{padding:10px}
-  .cost-accordion .big{font-size:1.45rem}
+  .cost-accordion summary{position:relative;display:block;padding-right:24px}
+  .cost-accordion summary::after{position:absolute;top:0;right:0}
+  .cost-accordion-label,.cost-accordion .big{display:block}
+  .cost-accordion .big{font-size:1.45rem;white-space:normal;overflow-wrap:anywhere}
   footer{padding:0 12px 24px}
 }
 @media print{
@@ -226,9 +230,8 @@ footer{max-width:920px;margin:0 auto;padding:0 16px 30px;color:var(--muted);font
       <div class="row" style="margin-top:12px">
         <button class="print-button" onclick="window.print()">Print / save as PDF</button>
       </div>
+      <div class="ad" id="resultAd" aria-label="Advertisement">AdSense placement — configure publisher and slot IDs to display ads.</div>
     </div>
-
-    <div class="ad" id="resultAd" aria-label="Advertisement">AdSense placement — configure publisher and slot IDs to display ads.</div>
 
     <div class="premium">
       <h3>Premium (coming soon)</h3>
@@ -311,6 +314,7 @@ footer{max-width:920px;margin:0 auto;padding:0 16px 30px;color:var(--muted);font
       ad.setAttribute("data-ad-slot",slot.id);
       ad.setAttribute("data-ad-format","auto");
       ad.setAttribute("data-full-width-responsive","true");
+      slot.element.classList.add("ad-active");
       slot.element.appendChild(ad);
       window.adsbygoogle=window.adsbygoogle||[];
       window.adsbygoogle.push({});
@@ -410,7 +414,7 @@ footer{max-width:920px;margin:0 auto;padding:0 16px 30px;color:var(--muted);font
     var total = totalArea * rate;
     var low = total * 0.9, high = total * 1.1;
 
-    $("totalCost").textContent = inr.format(total);
+    $("totalCost").textContent = "Approx. " + inr.format(total);
     $("costRange").textContent = "Likely range: " + inr.format(low) + " to " + inr.format(high);
     var rateDescription = customRate > 0
       ? "Using your custom rate of " + inr.format(rate) + " per sq ft; city adjustment not applied."
