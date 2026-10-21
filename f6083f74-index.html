@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>House Construction Cost Calculator India - Free Estimator</title>
+<meta name="description" content="Free house construction cost calculator for India. Estimate total cost, cement, steel, bricks, sand and aggregate, plus paint and tile requirements.">
+<style>
+:root{
+  --bg:#f6f7f9;--card:#fff;--text:#1c2330;--muted:#5d6778;--line:#dfe3ea;
+  --accent:#e8590c;--accent-d:#c24a08;--ok:#2b8a3e;--soft:#fff4ec;
+  --breakdown-1:#e8590c;--breakdown-2:#4263eb;--breakdown-3:#2f9e44;
+  --breakdown-4:#f08c00;--breakdown-5:#7048e8;--breakdown-6:#0c8599;
+  --breakdown-7:#d6336c;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#12151b;--card:#1b2029;--text:#e8ebf0;--muted:#9aa4b5;--line:#2c3340;--soft:#2a1d14}
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+header{padding:20px 16px 8px;max-width:920px;margin:0 auto}
+h1{font-size:1.5rem;margin:0 0 4px}
+header p{margin:0;color:var(--muted)}
+main{max-width:920px;margin:0 auto;padding:8px 16px 40px}
+.calculator-picker{max-width:360px;margin:12px 0}
+.calculator-picker label{font-weight:600}
+.calculator-select{position:relative}
+.calculator-select select{appearance:none;padding-right:42px;cursor:pointer}
+.calculator-select::after{content:"";position:absolute;right:16px;top:50%;width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.calculator-select:focus-within::after{border-color:var(--accent)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px}
+input,select{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font-size:1rem}
+.grid>div>label,.grid>div>.field-label-row{height:2.75rem;min-height:2.75rem}
+.field-label-row{display:flex;align-items:flex-start;gap:6px;margin-bottom:4px}
+.field-label-row label{margin:0}
+.field-info{position:relative;flex:none}
+.field-info summary{margin-top:1px}
+.field-info[open]{z-index:2}
+.field-info summary{display:flex;align-items:center;justify-content:center;width:19px;height:19px;border:1px solid var(--muted);border-radius:50%;color:var(--muted);font-size:.75rem;font-weight:700;line-height:1;cursor:pointer;list-style:none}
+.field-info summary::-webkit-details-marker{display:none}
+.field-info summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.field-info-content{position:absolute;top:calc(100% + 6px);left:var(--info-left,0px);width:min(280px,calc(100vw - 56px));padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);box-shadow:0 6px 18px rgba(0,0,0,.16);color:var(--text);font-size:.82rem;font-weight:400}
+button.primary{background:var(--accent);color:#fff;border:0;padding:12px 18px;border-radius:10px;font-size:1rem;cursor:pointer;margin-top:14px}
+button.primary:hover{background:var(--accent-d)}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--text);padding:10px 14px;border-radius:10px;cursor:pointer}
+.print-button{background:var(--accent);border:1px solid var(--accent);color:#fff;padding:12px 18px;font-size:1rem;font-weight:600;box-shadow:0 3px 8px rgba(232,89,12,.22)}
+.print-button:hover{background:var(--accent-d);border-color:var(--accent-d)}
+.print-button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.result{display:none}
+.big{font-size:1.9rem;font-weight:700;color:var(--accent)}
+.cost-accordion{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--bg)}
+.cost-accordion summary{display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer;list-style:none}
+.cost-accordion summary::-webkit-details-marker{display:none}
+.cost-accordion summary::after{content:"+";color:var(--muted);font-size:1.2rem}
+.cost-accordion[open] summary::after{content:"−"}
+.cost-accordion-label{font-weight:600}
+.cost-accordion .big{white-space:nowrap}
+.cost-accordion-content{padding-top:8px}
+.material-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:14px 0}
+.material-summary-item{border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--bg)}
+.material-summary-value{font-size:1.3rem;font-weight:700;color:var(--accent)}
+.range{color:var(--muted);font-size:.95rem}
+table{width:100%;border-collapse:collapse;margin-top:8px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);font-size:.95rem}
+td:last-child,th:last-child{text-align:right}
+.breakdown-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,1fr);gap:20px;align-items:center}
+.breakdown-table{table-layout:fixed}
+.breakdown-table th:first-child{width:52%}
+.breakdown-table th:nth-child(2){width:15%}
+.breakdown-table td:first-child{overflow-wrap:anywhere}
+.breakdown-table td:last-child{overflow-wrap:anywhere}
+.breakdown-swatch{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:baseline}
+.breakdown-chart-panel{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0}
+.breakdown-chart{width:min(100%,280px);aspect-ratio:1;border-radius:50%;background:var(--chart-gradient);flex:none}
+.breakdown-chart-note{text-align:center}
+.breakdown-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;width:100%}
+.breakdown-legend-item{display:flex;align-items:center;gap:6px;min-width:0;font-size:.82rem}
+.breakdown-legend-item .breakdown-swatch{flex:none;margin:0}
+.breakdown-legend-label{overflow-wrap:anywhere}
+.breakdown-color-0{background:var(--breakdown-1)}
+.breakdown-color-1{background:var(--breakdown-2)}
+.breakdown-color-2{background:var(--breakdown-3)}
+.breakdown-color-3{background:var(--breakdown-4)}
+.breakdown-color-4{background:var(--breakdown-5)}
+.breakdown-color-5{background:var(--breakdown-6)}
+.breakdown-color-6{background:var(--breakdown-7)}
+.note{font-size:.82rem;color:var(--muted)}
+.ad{min-height:90px;border:1px dashed var(--line);border-radius:10px;padding:18px;text-align:center;color:var(--muted);font-size:.85rem;margin:14px 0}
+.adsbygoogle{display:block;min-height:90px}
+.premium{background:var(--soft);border:1px solid var(--accent);border-radius:14px;padding:14px}
+.premium h3{margin:0 0 6px}
+.hide{display:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+footer{max-width:920px;margin:0 auto;padding:0 16px 30px;color:var(--muted);font-size:.8rem}
+@media(max-width:640px){
+  header{padding:16px 14px 8px}
+  main{padding:8px 12px 32px}
+  .card{padding:14px}
+  .calculator-picker{max-width:none}
+  .breakdown-layout{grid-template-columns:1fr;gap:16px}
+  .breakdown-chart{width:min(75vw,260px)}
+  .breakdown-table th,.breakdown-table td{padding:7px 3px;font-size:.8rem}
+  .grid>div>label,.grid>div>.field-label-row{height:auto;min-height:0}
+  .cost-accordion{padding:10px}
+  .cost-accordion .big{font-size:1.45rem}
+  footer{padding:0 12px 24px}
+}
+@media print{
+  .calculator-picker,.ad,.premium,button,footer .noprint{display:none!important}
+  body{background:#fff;color:#000}
+  .card{border:1px solid #bbb}
+  .calculator-inputs{display:block}
+  .calculator-inputs .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 18px}
+  .calculator-inputs .grid>div{display:flex;align-items:baseline;gap:5px}
+  .calculator-inputs .grid>div>label,.calculator-inputs .field-label-row label{height:auto;min-height:0;color:#000;font-size:.9rem;font-weight:400}
+  .calculator-inputs .field-label-row{display:contents}
+  .calculator-inputs .field-info,.calculator-inputs input,.calculator-inputs select{display:none!important}
+  .print-field-value{display:inline;font-size:.9rem;color:#000}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>House Construction Cost Calculator</h1>
+  <p>Quick, free estimates for home building in India. Rates are editable assumptions, not quotes.</p>
+</header>
+
+<main>
+  <div class="calculator-picker">
+    <label for="calculatorType">Choose a calculator</label>
+    <div class="calculator-select">
+      <select id="calculatorType">
+        <option value="cost" selected>Construction cost</option>
+        <option value="paint">Paint calculator</option>
+        <option value="tile">Tile calculator</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- COST -->
+  <section id="tab-cost">
+    <div class="card calculator-inputs">
+      <div class="grid">
+        <div><label for="area">Built-up area per floor (sq ft)</label><input id="area" type="number" min="100" value="1000"></div>
+        <div><label for="floors">Number of floors</label><input id="floors" type="number" min="1" max="6" value="2"></div>
+        <div>
+          <div class="field-label-row">
+            <label for="finish">Finish level</label>
+            <details class="field-info">
+              <summary aria-label="About finish level"><span aria-hidden="true">i</span></summary>
+              <div class="field-info-content" id="finishHelp">Balanced materials and fittings for a typical home.</div>
+            </details>
+          </div>
+          <select id="finish">
+            <option value="basic">Basic</option>
+            <option value="standard" selected>Standard</option>
+            <option value="premium">Premium</option>
+          </select>
+        </div>
+        <div>
+          <div class="field-label-row">
+            <label for="tier">City cost adjustment</label>
+            <details class="field-info">
+              <summary aria-label="About city cost adjustment"><span aria-hidden="true">i</span></summary>
+              <div class="field-info-content" id="tierHelp">Applied to the default rate for your finish level. A custom rate overrides this adjustment.</div>
+            </details>
+          </div>
+          <select id="tier">
+            <option value="1.15">Metro / Tier 1 (+15%)</option>
+            <option value="1" selected>Tier 2 (baseline)</option>
+            <option value="0.9">Tier 3 / town (-10%)</option>
+          </select>
+        </div>
+        <div>
+          <div class="field-label-row">
+            <label for="rate">Custom rate per sq ft (₹, optional)</label>
+            <details class="field-info">
+              <summary aria-label="About custom rate"><span aria-hidden="true">i</span></summary>
+              <div class="field-info-content" id="rateHelp">Enter a rate to use your own price instead of the finish and city estimate.</div>
+            </details>
+          </div>
+          <input id="rate" type="number" min="500" placeholder="Use finish + city estimate">
+        </div>
+        <div><label for="parking">Stilt parking floor</label>
+          <select id="parking"><option value="0">No</option><option value="1">Yes (adds ~60% of one floor)</option></select></div>
+      </div>
+      <button class="primary" id="calcCost">Calculate</button>
+    </div>
+
+    <div class="card result" id="costResult">
+      <details class="cost-accordion" open>
+        <summary>
+          <span class="cost-accordion-label">Estimated total cost</span>
+          <span class="big" id="totalCost"></span>
+        </summary>
+        <div class="cost-accordion-content">
+          <div class="range" id="costRange"></div>
+          <p class="note" id="costMeta"></p>
+        </div>
+      </details>
+
+      <h3>Steel and cement summary</h3>
+      <div class="material-summary" aria-label="Estimated steel and cement quantities">
+        <div class="material-summary-item">
+          <div class="note">Cement</div>
+          <div class="material-summary-value" id="cementSummary"></div>
+          <div class="note">50 kg bags</div>
+        </div>
+        <div class="material-summary-item">
+          <div class="note">Steel (TMT)</div>
+          <div class="material-summary-value" id="steelSummary"></div>
+          <div class="note" id="steelSummaryTonnes"></div>
+        </div>
+      </div>
+
+      <h3>Cost breakdown</h3>
+      <div class="breakdown-layout" id="breakdown"></div>
+
+      <h3>Material quantities (rule of thumb)</h3>
+      <table>
+        <thead><tr><th>Material</th><th>Approx. quantity</th></tr></thead>
+        <tbody id="materials"></tbody>
+      </table>
+      <div class="row" style="margin-top:12px">
+        <button class="print-button" onclick="window.print()">Print / save as PDF</button>
+      </div>
+    </div>
+
+    <div class="ad" id="resultAd" aria-label="Advertisement">AdSense placement — configure publisher and slot IDs to display ads.</div>
+
+    <div class="premium">
+      <h3>Premium (coming soon)</h3>
+      <div class="note">Detailed room-wise report, editable rates by material, branded PDF for contractors, saved projects.</div>
+    </div>
+  </section>
+
+  <!-- PAINT -->
+  <section id="tab-paint" class="hide">
+    <div class="card calculator-inputs">
+      <div class="grid">
+        <div><label for="pl">Room length (ft)</label><input id="pl" type="number" value="12"></div>
+        <div><label for="pw">Room width (ft)</label><input id="pw" type="number" value="10"></div>
+        <div><label for="ph">Wall height (ft)</label><input id="ph" type="number" value="10"></div>
+        <div><label for="pd">Doors</label><input id="pd" type="number" value="1"></div>
+        <div><label for="pwin">Windows</label><input id="pwin" type="number" value="2"></div>
+        <div><label for="pc">Coats</label><input id="pc" type="number" value="2" min="1" max="4"></div>
+        <div><label for="pceil">Paint ceiling too?</label>
+          <select id="pceil"><option value="0">No</option><option value="1">Yes</option></select></div>
+      </div>
+      <button class="primary" id="calcPaint">Calculate</button>
+    </div>
+    <div class="card result" id="paintResult"></div>
+  </section>
+
+  <!-- TILE -->
+  <section id="tab-tile" class="hide">
+    <div class="card calculator-inputs">
+      <div class="grid">
+        <div><label for="tl">Floor length (ft)</label><input id="tl" type="number" value="12"></div>
+        <div><label for="tw">Floor width (ft)</label><input id="tw" type="number" value="10"></div>
+        <div><label for="ts">Tile size</label>
+          <select id="ts">
+            <option value="1x1">1 x 1 ft (300x300 mm)</option>
+            <option value="2x1">2 x 1 ft (600x300 mm)</option>
+            <option value="2x2" selected>2 x 2 ft (600x600 mm)</option>
+            <option value="4x2">4 x 2 ft (1200x600 mm)</option>
+          </select></div>
+        <div><label for="tw2">Wastage %</label><input id="tw2" type="number" value="10" min="0" max="25"></div>
+      </div>
+      <button class="primary" id="calcTile">Calculate</button>
+    </div>
+    <div class="card result" id="tileResult"></div>
+  </section>
+  <div class="ad" id="secondaryAd" aria-label="Advertisement">AdSense placement — configure publisher and slot IDs to display ads.</div>
+</main>
+
+<footer>
+  <p><strong>Disclaimer:</strong> Results are rough planning estimates based on typical Indian rates and rule-of-thumb quantities. Actual cost varies by city, design, soil, material prices and labour. Get quotes from local contractors before deciding.</p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){return document.getElementById(id)};
+  var inr = new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0});
+  var num = new Intl.NumberFormat("en-IN",{maximumFractionDigits:0});
+  var num1 = new Intl.NumberFormat("en-IN",{maximumFractionDigits:1});
+
+  // Add your AdSense publisher ID and ad unit slot IDs to activate ads.
+  var ADSENSE_CONFIG = {
+    publisherId:"ca-pub-3875642376420561",
+    resultSlotId:"4729874457",
+    secondarySlotId:""
+  };
+  function setupAds(){
+    if(location.protocol !== "http:" && location.protocol !== "https:"){return;}
+    if(!/^ca-pub-\d{16}$/.test(ADSENSE_CONFIG.publisherId)){return;}
+    var slots = [
+      {element:$("resultAd"), id:ADSENSE_CONFIG.resultSlotId},
+      {element:$("secondaryAd"), id:ADSENSE_CONFIG.secondarySlotId}
+    ].filter(function(slot){return /^\d+$/.test(slot.id);});
+    if(!slots.length){return;}
+
+    slots.forEach(function(slot){
+      slot.element.textContent="";
+      var ad = document.createElement("ins");
+      ad.className="adsbygoogle";
+      ad.setAttribute("data-ad-client",ADSENSE_CONFIG.publisherId);
+      ad.setAttribute("data-ad-slot",slot.id);
+      ad.setAttribute("data-ad-format","auto");
+      ad.setAttribute("data-full-width-responsive","true");
+      slot.element.appendChild(ad);
+      window.adsbygoogle=window.adsbygoogle||[];
+      window.adsbygoogle.push({});
+    });
+
+    var script=document.createElement("script");
+    script.async=true;
+    script.crossOrigin="anonymous";
+    script.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client="+encodeURIComponent(ADSENSE_CONFIG.publisherId);
+    script.onerror=function(){console.error("Google AdSense script failed to load.");};
+    document.head.appendChild(script);
+  }
+  setupAds();
+
+  // ---- Editable assumptions (update these as market rates change) ----
+  var BASE_RATE = {basic:1700, standard:2100, premium:2900}; // ₹ per sq ft, Tier 2
+  var FINISH_DESCRIPTIONS = {
+    basic:"Functional, economical materials and straightforward fittings.",
+    standard:"Balanced materials and fittings for a typical home.",
+    premium:"Higher-grade materials, fittings and finish details."
+  };
+  var SPLIT = [
+    ["Structure (foundation, columns, slabs)",45,"Structure"],
+    ["Masonry and plastering",15,"Masonry"],
+    ["Flooring and tiles",10,"Flooring"],
+    ["Doors and windows",9,"Doors/windows"],
+    ["Electrical",8,"Electrical"],
+    ["Plumbing and sanitary",7,"Plumbing"],
+    ["Painting and finishing",6,"Paint/finish"]
+  ];
+  // per sq ft of built-up area (rule of thumb)
+  var MATERIAL = {cement:0.4, steel:4, sand:1.3, aggregate:1.35, bricks:8};
+
+  // ---- Calculator selection ----
+  $("calculatorType").addEventListener("change", function(){
+    ["cost","paint","tile"].forEach(function(name){
+      $("tab-"+name).classList.toggle("hide", name !== $("calculatorType").value);
+    });
+  });
+
+  function val(id){var v = parseFloat($(id).value); return isFinite(v) ? v : 0;}
+
+  window.addEventListener("beforeprint", function(){
+    document.querySelectorAll(".calculator-inputs .grid > div").forEach(function(field){
+      var control = field.querySelector("input,select");
+      if(!control){return;}
+      var value = control instanceof HTMLSelectElement
+        ? control.selectedOptions[0].textContent.trim()
+        : control.value.trim();
+      if(control.id === "rate" && !value){value = "Automatic finish and city estimate";}
+      var output = document.createElement("span");
+      output.className = "print-field-value";
+      output.textContent = value;
+      field.appendChild(output);
+    });
+  });
+  window.addEventListener("afterprint", function(){
+    document.querySelectorAll(".print-field-value").forEach(function(output){output.remove();});
+  });
+
+  document.querySelectorAll(".field-info").forEach(function(info){
+    info.addEventListener("toggle", function(){
+      if(!info.open){return;}
+      var left = info.getBoundingClientRect().left;
+      var width = Math.min(280, window.innerWidth - 56);
+      var offset = Math.max(12 - left, Math.min(0, window.innerWidth - width - 12 - left));
+      info.style.setProperty("--info-left", offset + "px");
+    });
+  });
+
+  $("finish").addEventListener("change", function(){
+    $("finishHelp").textContent = FINISH_DESCRIPTIONS[$("finish").value];
+    if($("costResult").style.display === "block"){calculateCost(false, false);}
+  });
+  ["area","floors","tier","rate","parking"].forEach(function(id){
+    $(id).addEventListener("input", function(){
+      if($("costResult").style.display === "block"){calculateCost(false, false);}
+    });
+    $(id).addEventListener("change", function(){
+      if($("costResult").style.display === "block"){calculateCost(false, false);}
+    });
+  });
+
+  // ---- Cost ----
+  function calculateCost(showValidation, scrollToResult){
+    var area = val("area"), floors = Math.max(1, Math.round(val("floors")));
+    if(area <= 0){
+      if(showValidation){alert("Enter a valid built-up area.");}
+      return;
+    }
+    var tier = parseFloat($("tier").value);
+    var customRate = val("rate");
+    var baseRate = BASE_RATE[$("finish").value];
+    var rate = customRate > 0 ? customRate : baseRate * tier;
+    var stilt = $("parking").value === "1" ? area * 0.6 : 0;
+    var totalArea = area * floors + stilt;
+    var total = totalArea * rate;
+    var low = total * 0.9, high = total * 1.1;
+
+    $("totalCost").textContent = inr.format(total);
+    $("costRange").textContent = "Likely range: " + inr.format(low) + " to " + inr.format(high);
+    var rateDescription = customRate > 0
+      ? "Using your custom rate of " + inr.format(rate) + " per sq ft; city adjustment not applied."
+      : $("finish").selectedOptions[0].text + " finish: " + inr.format(baseRate) + " × " + $("tier").selectedOptions[0].text + " = " + inr.format(rate) + " per sq ft.";
+    $("costMeta").textContent = "Total built-up: " + num.format(totalArea) + " sq ft. " + rateDescription;
+
+    var chartStops = [];
+    var splitRows = SPLIT.map(function(s, i){
+      var amt = total * s[1] / 100;
+      var start = SPLIT.slice(0, i).reduce(function(sum, item){return sum + item[1]}, 0);
+      var end = start + s[1];
+      chartStops.push("var(--breakdown-"+(i+1)+") "+start+"% "+end+"%");
+      return '<tr><td><span class="breakdown-swatch breakdown-color-'+i+'" aria-hidden="true"></span>'+s[0]+'</td><td>'+s[1]+'%</td><td>'+inr.format(amt)+'</td></tr>';
+    }).join("");
+    var legend = SPLIT.map(function(s, i){
+      return '<div class="breakdown-legend-item"><span class="breakdown-swatch breakdown-color-'+i+'" aria-hidden="true"></span><span class="breakdown-legend-label">'+s[2]+' '+s[1]+'%</span></div>';
+    }).join("");
+    $("breakdown").innerHTML =
+      '<div><table class="breakdown-table"><thead><tr><th>Cost item</th><th>Share</th><th>Amount</th></tr></thead><tbody>'+splitRows+'</tbody></table></div>'+
+      '<div class="breakdown-chart-panel"><div class="breakdown-chart" role="img" aria-label="Pie chart of the cost breakdown" style="--chart-gradient:conic-gradient('+chartStops.join(",")+')"></div><div class="breakdown-legend" aria-label="Pie chart legend">'+legend+'</div></div>';
+
+    var m = MATERIAL;
+    var cementBags = totalArea*m.cement;
+    var steelKg = totalArea*m.steel;
+    $("cementSummary").textContent = "Approx. " + num.format(cementBags);
+    $("steelSummary").textContent = "Approx. " + num.format(steelKg) + " kg";
+    $("steelSummaryTonnes").textContent = "Approx. " + num1.format(steelKg/1000) + " tonnes";
+    var rows = [
+      ["Cement", num.format(cementBags)+" bags (50 kg)"],
+      ["Steel (TMT)", num.format(steelKg)+" kg (~"+num1.format(steelKg/1000)+" tonnes)"],
+      ["Sand", num.format(totalArea*m.sand)+" cu ft"],
+      ["Aggregate (coarse)", num.format(totalArea*m.aggregate)+" cu ft"],
+      ["Bricks", num.format(totalArea*m.bricks)+" nos"]
+    ];
+    $("materials").innerHTML = rows.map(function(r){return "<tr><td>"+r[0]+"</td><td>"+r[1]+"</td></tr>"}).join("");
+    $("costResult").style.display = "block";
+    if(scrollToResult){$("costResult").scrollIntoView({behavior:"smooth", block:"nearest"});}
+  }
+  $("calcCost").addEventListener("click", function(){calculateCost(true, true);});
+
+  // ---- Paint ----
+  $("calcPaint").addEventListener("click", function(){
+    var l = val("pl"), w = val("pw"), h = val("ph");
+    var doors = val("pd"), wins = val("pwin"), coats = Math.max(1, val("pc"));
+    if(l<=0||w<=0||h<=0){alert("Enter valid room dimensions."); return;}
+    var walls = 2*(l+w)*h;
+    var openings = doors*21 + wins*15; // door ~7x3 ft, window ~5x3 ft
+    var ceiling = $("pceil").value === "1" ? l*w : 0;
+    var area = Math.max(0, walls - openings) + ceiling;
+    var coverage = 110; // sq ft per litre per coat (typical emulsion)
+    var litres = area * coats / coverage;
+    var el = $("paintResult");
+    el.innerHTML = '<div class="note">Paint needed</div><div class="big">'+num1.format(litres)+' litres</div>'+
+      '<p class="note">Paintable area: '+num.format(area)+' sq ft, '+coats+' coat(s), at about '+coverage+' sq ft per litre per coat. Add primer separately (about 1 litre per 120 sq ft) and buy about 10% extra.</p>';
+    el.style.display = "block";
+  });
+
+  // ---- Tile ----
+  $("calcTile").addEventListener("click", function(){
+    var l = val("tl"), w = val("tw"), waste = val("tw2");
+    if(l<=0||w<=0){alert("Enter valid floor dimensions."); return;}
+    var parts = $("ts").value.split("x").map(Number);
+    var tileArea = parts[0]*parts[1];
+    var area = l*w;
+    var areaWaste = area*(1+waste/100);
+    var count = Math.ceil(areaWaste/tileArea);
+    var el = $("tileResult");
+    el.innerHTML = '<div class="note">Tiles needed</div><div class="big">'+num.format(count)+' tiles</div>'+
+      '<p class="note">Floor area: '+num.format(area)+' sq ft. With '+waste+'% wastage: '+num1.format(areaWaste)+' sq ft ('+tileArea+' sq ft per tile). Use 10-15% wastage for diagonal layouts.</p>';
+    el.style.display = "block";
+  });
+})();
+</script>
+</body>
+</html>
