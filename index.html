@@ -22,8 +22,9 @@ header{padding:20px 16px 8px;max-width:1240px;margin:0 auto}
 h1{font-size:1.5rem;margin:0 0 4px}
 header p{margin:0;color:var(--muted)}
 main{max-width:1240px;margin:0 auto;padding:8px 16px 40px}
-.page-layout{display:grid;grid-template-columns:minmax(0,1fr);align-items:start}
+.page-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
 .calculator-column{min-width:0}
+.ad-sidebar-space{min-width:0}
 .calculator-picker{max-width:360px;margin:12px 0}
 .calculator-picker label{font-weight:600}
 .calculator-select{position:relative}
@@ -93,14 +94,18 @@ td:last-child,th:last-child{text-align:right}
 .ad:not(.ad-active){display:none}
 .ad-horizontal{width:100%;min-height:100px}
 .ad-placement-placeholder{display:none}
-#resultAd.ad-preview{display:flex;min-height:100px;align-items:center;justify-content:center}
-#resultAd.ad-preview .ad-placement-placeholder{display:block}
+.ad-horizontal.ad-preview{display:flex;min-height:100px;align-items:center;justify-content:center}
+.ad-horizontal.ad-preview .ad-placement-placeholder{display:block}
 .adsbygoogle{display:block;width:100%;min-height:inherit}
 .premium{background:var(--soft);border:1px solid var(--accent);border-radius:14px;padding:14px}
 .premium h3{margin:0 0 6px}
 .hide{display:none}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);font-size:.8rem}
+@media(max-width:900px){
+  .page-layout{grid-template-columns:minmax(0,1fr)}
+  .ad-sidebar-space{display:none}
+}
 @media(max-width:640px){
   header{padding:16px 14px 8px}
   main{padding:8px 12px 32px}
@@ -202,6 +207,10 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
       <button class="primary" id="calcCost">Calculate</button>
     </div>
 
+    <div class="ad ad-horizontal" id="defaultAd" aria-label="Advertisement">
+      <span class="ad-placement-placeholder">AdSense horizontal slot preview<br><span class="note">Live ad will appear here after deployment.</span></span>
+    </div>
+
     <div class="card result" id="costResult">
       <details class="cost-accordion" open>
         <summary>
@@ -288,6 +297,7 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
     <div class="card result" id="tileResult"></div>
   </section>
   </div>
+  <div class="ad-sidebar-space" aria-hidden="true"></div>
   </div>
 </main>
 
@@ -332,6 +342,11 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
     script.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client="+encodeURIComponent(ADSENSE_CONFIG.publisherId);
     script.onerror=function(){console.error("Google AdSense script failed to load.");};
     document.head.appendChild(script);
+  }
+  if(location.protocol === "http:" || location.protocol === "https:"){
+    setupAd($("defaultAd"),ADSENSE_CONFIG.resultSlotId,"auto");
+  }else{
+    $("defaultAd").classList.add("ad-preview");
   }
   // ---- Editable assumptions (update these as market rates change) ----
   var BASE_RATE = {basic:1700, standard:2100, premium:2900}; // ₹ per sq ft, Tier 2
