@@ -7,34 +7,49 @@
 <meta name="description" content="Free house construction cost calculator for India. Estimate total cost, cement, steel, bricks, sand and aggregate, plus paint and tile requirements.">
 <style>
 :root{
-  --bg:#f6f7f9;--card:#fff;--text:#1c2330;--muted:#5d6778;--line:#dfe3ea;
-  --accent:#e8590c;--accent-d:#c24a08;--ok:#2b8a3e;--soft:#fff4ec;
+  --bg:#f5f7fa;--card:#fff;--text:#263244;--muted:#64748b;--line:#dce2ea;
+  --navy:#142c5b;--accent:#f15a0a;--accent-d:#d94f08;--ok:#2b8a3e;--soft:#fff4ec;
   --breakdown-1:#e8590c;--breakdown-2:#4263eb;--breakdown-3:#2f9e44;
   --breakdown-4:#f08c00;--breakdown-5:#7048e8;--breakdown-6:#0c8599;
   --breakdown-7:#d6336c;
 }
-@media (prefers-color-scheme:dark){
-  :root{--bg:#12151b;--card:#1b2029;--text:#e8ebf0;--muted:#9aa4b5;--line:#2c3340;--soft:#2a1d14}
-}
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
-header{padding:20px 16px 8px;max-width:1240px;margin:0 auto}
-h1{font-size:1.5rem;margin:0 0 4px}
+header{padding:14px 20px;background:#fff;border-bottom:1px solid var(--line)}
+.header-brand{display:flex;align-items:flex-start;gap:24px;max-width:1200px;margin:0 auto}
+.header-logo{display:block;width:172px;height:auto;flex:none}
+h1{font-size:1.45rem;color:var(--navy);margin:0 0 4px}
 header p{margin:0;color:var(--muted)}
-main{max-width:1240px;margin:0 auto;padding:8px 16px 40px}
-.page-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
-.calculator-column{min-width:0}
-.ad-sidebar-space{min-width:0}
+main{max-width:1240px;margin:0 auto;padding:8px 20px 40px}
+.page-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:start}
+.page-layout.construction-layout{grid-template-columns:minmax(0,1fr) 320px}
+.calculator-picker{grid-column:1;grid-row:1}
+.calculator-column{min-width:0;grid-column:1;grid-row:2}
 .calculator-picker{max-width:360px;margin:12px 0}
 .calculator-picker label{font-weight:600}
 .calculator-select{position:relative}
-.calculator-select select{appearance:none;padding-right:42px;cursor:pointer}
-.calculator-select::after{content:"";position:absolute;right:16px;top:50%;width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-70%) rotate(45deg);pointer-events:none}
-.calculator-select:focus-within::after{border-color:var(--accent)}
+.calculator-select select{background-image:none;cursor:pointer}
+.calculator-select::after{content:none}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
 .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
 label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px}
-input,select{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font-size:1rem}
+input,select{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background-color:var(--bg);color:var(--text);font-size:1rem}
+select{appearance:none;padding-right:42px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='m3 6 5 5 5-5' fill='none' stroke='%2364758b' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.custom-select{position:relative;width:100%;min-width:0}
+.native-select-source{display:none!important}
+.custom-select-trigger{display:flex;width:100%;min-height:48px;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--text);font:inherit;text-align:left;cursor:pointer}
+.custom-select-trigger:hover{border-color:#aab5c5}
+.custom-select-trigger:focus-visible{outline:3px solid rgba(241,90,10,.5);outline-offset:2px}
+.custom-select[aria-expanded="true"] .custom-select-trigger{border-color:var(--accent)}
+.custom-select-arrow{width:9px;height:9px;flex:none;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-2px) rotate(45deg)}
+.custom-select[aria-expanded="true"] .custom-select-arrow{transform:translateY(2px) rotate(225deg)}
+.custom-select-options{position:absolute;top:calc(100% + 5px);left:0;right:0;z-index:20;max-height:240px;overflow-y:auto;padding:5px;border:1px solid var(--line);border-radius:10px;background:#fff;box-shadow:0 10px 28px rgba(20,44,91,.16)}
+.custom-select-options[hidden]{display:none}
+.custom-select-option{display:flex;min-height:42px;align-items:center;padding:8px 10px;border-radius:6px;color:var(--text);font-size:1rem;line-height:1.35;cursor:pointer}
+.custom-select-option[aria-selected="true"]{background:#edf3ff;color:var(--navy);font-weight:600}
+.custom-select-option.is-active,.custom-select-option:hover{background:#f1f5f9}
+.custom-select-option[aria-selected="true"].is-active{background:#e2ebfc}
+.project-actions .custom-select{max-width:320px}
 .grid>div>label,.grid>div>.field-label-row{height:2.75rem;min-height:2.75rem}
 .field-label-row{display:flex;align-items:flex-start;gap:6px;margin-bottom:4px}
 .field-label-row label{margin:0}
@@ -98,25 +113,123 @@ td:last-child,th:last-child{text-align:right}
 .ad-horizontal.ad-preview .ad-placement-placeholder{display:block}
 .ad-horizontal.hide{display:none}
 .adsbygoogle{display:block;width:100%;min-height:inherit}
-.premium{background:var(--soft);border:1px solid var(--accent);border-radius:14px;padding:14px}
-.premium h3{margin:0 0 6px}
+.room-entry{margin-top:14px}
+.room-entry summary{font-weight:600;cursor:pointer}
+.room-row{display:grid;grid-template-columns:minmax(0,2fr) minmax(120px,1fr) auto;gap:10px;align-items:end;margin:10px 0}
+.room-row label{margin-bottom:4px}
+.room-row .ghost{white-space:nowrap}
+.room-error{color:#c92a2a}
+.room-report{margin-top:20px}
+.room-report[hidden]{display:none}
+.material-rate-input{max-width:150px;min-width:100px}
+.materials-rate-value{display:none}
+.material-rate-error{color:#c92a2a}
+#materialsSubtotal[hidden]{display:none}
+.project-tools{margin:0 0 14px}
+.project-tools summary,.report-settings summary{font-weight:600;cursor:pointer}
+.project-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-top:12px}
+.project-actions{display:grid;grid-template-columns:minmax(170px,auto) minmax(220px,1fr) auto auto;gap:12px;align-items:end;margin-top:16px}
+.project-selector-field{min-width:0}
+.project-selector-field>label{margin-bottom:6px;color:var(--text);font-weight:600}
+.project-selector-field .custom-select{max-width:none}
+.project-actions button{white-space:nowrap}
+.project-status{min-height:1.25em}
+.contractor-report-header{display:none}
+.contractor-brand{font-size:1.5rem;font-weight:700;color:var(--accent)}
+.contractor-logo{max-width:160px;max-height:72px;object-fit:contain;margin-bottom:8px}
+.contractor-contact{color:var(--muted)}
+.contractor-report-header hr{border:0;border-top:2px solid var(--accent);margin:12px 0}
+.report-settings{margin-top:14px}
 .hide{display:none}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);font-size:.8rem}
+footer p{margin:0 0 8px}
+.estimate-summary[hidden]{display:none}
+.estimate-summary{position:sticky;top:20px;grid-column:2;grid-row:2;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(20,44,91,.06)}
+.estimate-summary h2{margin:0 0 4px;color:var(--navy);font-size:1.05rem}
+.estimate-summary-total{font-size:1.8rem;line-height:1.25;font-weight:750;color:var(--accent);overflow-wrap:anywhere;margin:12px 0 4px}
+.estimate-summary-range{font-size:.88rem;color:var(--muted)}
+.estimate-summary-metrics{display:grid;gap:10px;margin:18px 0;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.estimate-summary-metric{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:.88rem}
+.estimate-summary-metric span{color:var(--muted)}
+.estimate-summary-metric strong{text-align:right}
+.estimate-summary-note{font-size:.8rem;color:var(--muted);margin:0 0 14px}
+.estimate-summary-placeholder{font-size:.9rem;color:var(--muted);margin:16px 0}
+.form-section{padding:4px 0 18px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.form-section:last-of-type{border-bottom:0}
+.form-section h2,.advanced-options h2{margin:0 0 4px;color:var(--navy);font-size:1.05rem}
+.form-section-intro{font-size:.84rem;color:var(--muted);margin:0 0 14px}
+.field-hint{margin:8px 0 0;color:var(--navy);font-size:.85rem;font-weight:600}
+.advanced-options{padding-top:2px}
+.advanced-options>h2{margin-bottom:10px}
+.advanced-options details{border-top:1px solid var(--line);padding:14px 0}
+.advanced-options details:last-of-type{border-bottom:1px solid var(--line)}
+.breakdown-layout{display:block}
+.breakdown-list{display:grid;gap:14px}
+.breakdown-row{min-width:0}
+.breakdown-row-top{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:baseline}
+.breakdown-row-label{display:flex;gap:8px;align-items:flex-start;min-width:0;font-size:.92rem}
+.breakdown-row-share{font-size:.85rem;color:var(--muted);white-space:nowrap}
+.breakdown-row-amount{font-size:.9rem;white-space:nowrap}
+.breakdown-track{height:7px;margin:7px 0 0 19px;border-radius:99px;background:#edf0f5;overflow:hidden}
+.breakdown-track span{display:block;height:100%;border-radius:inherit;background:var(--bar-color)}
+.result-section-title{margin:22px 0 10px;color:var(--navy);font-size:1.08rem}
+.estimate-overview{background:#f8f9fc;padding:16px;border:1px solid var(--line);border-radius:12px}
+.estimate-overview summary{list-style:none}
+.estimate-overview summary::-webkit-details-marker{display:none}
+.cost-accordion{background:#f8f9fc}
+.material-summary-item{background:#fff}
+.save-note{margin:6px 0 0}
+.project-status:empty{display:none}
+.project-status:not(:empty){margin:12px 0 0;padding:10px 12px;border-radius:8px;background:#f1f5f9}
+.project-status.room-error:not(:empty){background:#fff1f0}
+.save-project-dialog{width:min(440px,calc(100vw - 32px));padding:0;border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--text);box-shadow:0 20px 60px rgba(20,44,91,.24)}
+.save-project-dialog::backdrop{background:rgba(20,35,59,.48)}
+.save-project-dialog form{padding:24px}
+.save-project-dialog h2{margin:0 0 6px;color:var(--navy);font-size:1.2rem}
+.save-project-dialog p{margin:0 0 18px;color:var(--muted);font-size:.9rem}
+.save-project-dialog label{color:var(--text);font-weight:600}
+.save-project-dialog input{margin-top:5px}
+.save-project-dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+.page-layout:not(.construction-layout) .estimate-summary{display:none}
 @media(max-width:900px){
-  .page-layout{grid-template-columns:minmax(0,1fr)}
-  .ad-sidebar-space{display:none}
+  .page-layout.construction-layout{grid-template-columns:minmax(0,1fr) 280px;gap:14px}
+}
+@media(max-width:760px){
+  .page-layout.construction-layout{grid-template-columns:minmax(0,1fr)}
+  .calculator-picker{grid-column:1;grid-row:2}
+  .calculator-column{grid-column:1;grid-row:3}
+  .page-layout:not(.construction-layout) .calculator-column{grid-row:2}
+  .estimate-summary{position:sticky;top:0;z-index:5;grid-column:1;grid-row:1;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 12px;padding:10px 14px;border-radius:0 0 12px 12px}
+  .estimate-summary h2{grid-column:1;font-size:.86rem}
+  .estimate-summary>.note{display:none}
+  .estimate-summary-placeholder,.estimate-summary-content{grid-column:1;margin:0;font-size:.8rem}
+  .estimate-summary-total{font-size:1.25rem;margin:0}
+  .estimate-summary-range{font-size:.76rem}
+  .estimate-summary-metrics,.estimate-summary-note{display:none}
+  .estimate-summary button.primary{grid-column:2;grid-row:1/3;margin:0;padding:9px 12px;min-height:42px;font-size:.86rem}
+  #estimateSummaryContent{grid-column:1;grid-row:2}
 }
 @media(max-width:640px){
-  header{padding:16px 14px 8px}
+  header{padding:12px}
+  .header-brand{gap:14px}
+  .header-logo{width:124px}
+  h1{font-size:1.08rem;line-height:1.25}
   main{padding:8px 12px 32px}
   .card{padding:14px}
   .calculator-picker{max-width:none}
   .page-layout{gap:0}
+  .estimate-summary{padding:16px}
+  .estimate-summary-total{font-size:1.6rem}
   .breakdown-layout{grid-template-columns:1fr;gap:16px}
-  .breakdown-chart{width:min(75vw,260px)}
-  .breakdown-table th,.breakdown-table td{padding:7px 3px;font-size:.8rem}
+  .breakdown-row-top{grid-template-columns:minmax(0,1fr) auto}
+  .breakdown-row-amount{grid-column:1/-1;justify-self:end}
+  .breakdown-track{margin-left:0}
+  #costResult table{display:block;max-width:100%;overflow-x:auto}
   .grid>div>label,.grid>div>.field-label-row{height:auto;min-height:0}
+  .room-row{grid-template-columns:minmax(0,1fr) minmax(90px,.7fr);gap:8px}
+  .room-row .ghost{grid-column:1/-1;justify-self:start}
+  .material-rate-input{min-width:76px;padding:8px}
   .cost-accordion{padding:10px}
   .cost-accordion summary{position:relative;display:block;padding-right:24px}
   .cost-accordion summary::after{position:absolute;top:0;right:0}
@@ -124,8 +237,48 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
   .cost-accordion .big{font-size:1.45rem;white-space:normal;overflow-wrap:anywhere}
   footer{padding:0 12px 24px}
 }
+@media(max-width:760px){
+  .project-actions{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .project-selector-field{grid-column:1/-1}
+  .project-actions button{width:100%}
+}
+input,select{min-height:48px;background-color:#fff;border-radius:9px}
+button.primary,.print-button{min-height:48px;background:var(--accent);border-radius:10px;box-shadow:none;font-weight:650}
+button.ghost{min-height:44px;border-radius:9px}
+button.primary:hover,.print-button:hover{background:var(--accent-d)}
+button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid rgba(241,90,10,.5);outline-offset:2px}
+.card{border-radius:16px;box-shadow:0 4px 18px rgba(20,44,91,.035)}
+.project-tools{padding:14px 16px}
+.project-tools summary,.report-settings summary,.room-entry summary{color:var(--navy)}
+.calculator-inputs{padding:22px}
+.calculator-inputs .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 16px}
+.calculator-inputs .grid>div>label,.calculator-inputs .grid>div>.field-label-row{height:auto;min-height:2.1rem}
+.field-label-row label,.calculator-inputs .grid>div>label{color:var(--text);font-weight:600}
+.form-section .grid{margin-top:8px}
+.project-actions select{min-height:44px}
+.cost-accordion .big{font-size:1.8rem}
+.result-section-title:first-of-type{margin-top:18px}
+.contractor-report-header hr{border-color:var(--accent)}
+@media(max-width:520px){
+  .calculator-inputs{padding:16px}
+  .calculator-inputs .grid{grid-template-columns:minmax(0,1fr);gap:14px}
+  .project-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .project-selector-field{grid-column:1/-1}
+  .project-actions button{width:100%}
+  .header-brand{gap:12px}
+  .header-logo{width:108px}
+  h1{font-size:.98rem}
+  header p{font-size:.85rem}
+  .breakdown-row-top{gap:6px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
 @media print{
-  .calculator-picker,.ad,.premium,button,footer .noprint{display:none!important}
+  .calculator-picker,.ad,button,footer .noprint,.project-tools,.report-settings{display:none!important}
+  .custom-select{display:none!important}
+  .estimate-summary{display:none!important}
+  .page-layout{display:block}
   body{background:#fff;color:#000}
   .card{border:1px solid #bbb}
   .calculator-inputs{display:block}
@@ -135,18 +288,32 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
   .calculator-inputs .field-label-row{display:contents}
   .calculator-inputs .field-info,.calculator-inputs input,.calculator-inputs select{display:none!important}
   .print-field-value{display:inline;font-size:.9rem;color:#000}
+  #materials input{display:none!important}
+  .materials-rate-value{display:inline!important}
+  .contractor-print header,.contractor-print footer,.contractor-print .calculator-inputs,
+  .contractor-print .calculator-picker,.contractor-print .project-tools{display:none!important}
+  .contractor-print .contractor-report-header{display:block!important}
+  .contractor-print main{max-width:none;padding:0}
+  .contractor-print .page-layout{display:block}
+  .contractor-print .calculator-column{width:100%}
+  .contractor-print .result{display:block!important;border:0;padding:0}
+  .contractor-print .card{border:0}
 }
 </style>
 </head>
 <body>
 <header>
-  <h1>House Construction Cost Calculator</h1>
-  <p>Quick, free estimates for home building in India. Rates are editable assumptions, not quotes.</p>
+  <div class="header-brand">
+    <img class="header-logo" src="vika_solutions_logo.svg" alt="Vika Solutions">
+    <div>
+      <h1>House Construction Cost Calculator</h1>
+      <p>Quick, indicative estimates for home building in India.</p>
+    </div>
+  </div>
 </header>
 
 <main>
-  <div class="page-layout">
-  <div class="calculator-column">
+  <div class="page-layout construction-layout">
   <div class="calculator-picker">
     <label for="calculatorType">Choose a calculator</label>
     <div class="calculator-select">
@@ -157,14 +324,25 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
       </select>
     </div>
   </div>
+  <div class="calculator-column">
 
   <!-- COST -->
   <section id="tab-cost">
     <div class="card calculator-inputs">
-      <div class="grid">
-        <div><label for="area">Built-up area per floor (sq ft)</label><input id="area" type="number" min="100" value="1000"></div>
-        <div><label for="floors">Number of floors</label><input id="floors" type="number" min="1" max="6" value="2"></div>
-        <div>
+      <section class="form-section" aria-labelledby="basicsHeading">
+        <h2 id="basicsHeading">Project basics</h2>
+        <p class="form-section-intro">Start with the size and number of floors in your project.</p>
+        <div class="grid">
+          <div><label for="area">Built-up area per floor (sq ft)</label><input id="area" type="number" min="100" step="any" value="1000"></div>
+          <div><label for="floors">Number of floors</label><input id="floors" type="number" min="1" max="6" step="1" value="2"></div>
+        </div>
+        <p class="field-hint" id="builtUpPreview" aria-live="polite"></p>
+      </section>
+      <section class="form-section" aria-labelledby="specificationsHeading">
+        <h2 id="specificationsHeading">Construction specifications</h2>
+        <p class="form-section-intro">Choose the finish level and whether the project includes stilt parking.</p>
+        <div class="grid">
+          <div>
           <div class="field-label-row">
             <label for="finish">Finish level</label>
             <details class="field-info">
@@ -177,8 +355,17 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
             <option value="standard" selected>Standard</option>
             <option value="premium">Premium</option>
           </select>
+          </div>
+          <div><label for="parking">Stilt parking floor</label>
+            <select id="parking"><option value="0">No</option><option value="1">Yes (adds ~60% of one floor)</option></select>
+          </div>
         </div>
-        <div>
+      </section>
+      <section class="form-section" aria-labelledby="locationHeading">
+        <h2 id="locationHeading">Location and pricing</h2>
+        <p class="form-section-intro">Use the default location adjustment or enter your own rate per square foot.</p>
+        <div class="grid">
+          <div>
           <div class="field-label-row">
             <label for="tier">City cost adjustment</label>
             <details class="field-info">
@@ -191,8 +378,8 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
             <option value="1" selected>Tier 2 (baseline)</option>
             <option value="0.9">Tier 3 / town (-10%)</option>
           </select>
-        </div>
-        <div>
+          </div>
+          <div>
           <div class="field-label-row">
             <label for="rate">Custom rate per sq ft (₹, optional)</label>
             <details class="field-info">
@@ -200,20 +387,71 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
               <div class="field-info-content" id="rateHelp">Enter a rate to use your own price instead of the finish and city estimate.</div>
             </details>
           </div>
-          <input id="rate" type="number" min="500" placeholder="Use finish + city estimate">
+          <input id="rate" type="number" min="500" step="any" placeholder="Use finish + city estimate">
+          </div>
         </div>
-        <div><label for="parking">Stilt parking floor</label>
-          <select id="parking"><option value="0">No</option><option value="1">Yes (adds ~60% of one floor)</option></select></div>
-      </div>
-      <button class="primary" id="calcCost">Calculate</button>
+      </section>
+      <section class="advanced-options" aria-labelledby="advancedHeading">
+        <h2 id="advancedHeading">Advanced options</h2>
+        <details class="room-entry" id="roomDetails">
+          <summary>Room-wise cost report (optional)</summary>
+          <p class="note">Add room areas across all floors. Their estimates use the same rate as the total; remaining built-up area is shown as shared space.</p>
+          <div id="roomRows"></div>
+          <button class="ghost" type="button" id="addRoom">Add a room</button>
+          <p class="note room-error" id="roomError" role="alert"></p>
+        </details>
+        <details class="report-settings" id="reportSettings">
+        <summary>Project and contractor details for PDF (optional)</summary>
+        <div class="project-grid">
+          <div><label for="reportProject">Project name</label><input id="reportProject" type="text" maxlength="80" placeholder="Optional"></div>
+          <div><label for="reportClient">Client name</label><input id="reportClient" type="text" maxlength="80" placeholder="Optional"></div>
+          <div><label for="reportLocation">Project location</label><input id="reportLocation" type="text" maxlength="120" placeholder="City / address"></div>
+          <div><label for="contractorName">Contractor / company</label><input id="contractorName" type="text" maxlength="100" placeholder="Company name"></div>
+          <div><label for="contractorPhone">Phone</label><input id="contractorPhone" type="tel" maxlength="40" placeholder="Optional"></div>
+          <div><label for="contractorEmail">Email</label><input id="contractorEmail" type="email" maxlength="120" placeholder="Optional"></div>
+          <div><label for="contractorAddress">Company address</label><input id="contractorAddress" type="text" maxlength="160" placeholder="Optional"></div>
+          <div><label for="reportDate">Report date</label><input id="reportDate" type="date"></div>
+        </div>
+        </details>
+      </section>
+      <button class="primary" id="calcCost">Calculate estimate</button>
     </div>
+
+    <details class="card project-tools" id="projectTools">
+      <summary>Save and load projects</summary>
+      <input id="projectName" type="hidden">
+      <div class="project-actions">
+        <button class="ghost" type="button" id="saveProject">Save project</button>
+        <div class="project-selector-field">
+          <label for="savedProjects">Saved projects</label>
+          <select id="savedProjects"><option value="">No saved projects</option></select>
+        </div>
+        <button class="ghost" type="button" id="loadProject">Load</button>
+        <button class="ghost" type="button" id="deleteProject">Delete</button>
+      </div>
+      <p class="note save-note">Projects are saved in this browser only.</p>
+      <p class="note project-status" id="projectStatus" role="status" aria-live="polite"></p>
+      <dialog class="save-project-dialog" id="saveProjectDialog" aria-labelledby="saveProjectTitle">
+        <form id="saveProjectForm">
+          <h2 id="saveProjectTitle">Save project</h2>
+          <p>Give this project a name so you can find it later.</p>
+          <label for="saveProjectName">Project name</label>
+          <input id="saveProjectName" type="text" maxlength="80" required autocomplete="off" placeholder="e.g. Greenfield home">
+          <div class="save-project-dialog-actions">
+            <button class="ghost" type="button" id="cancelSaveProject">Cancel</button>
+            <button class="primary" type="submit">Save project</button>
+          </div>
+        </form>
+      </dialog>
+    </details>
 
     <div class="ad ad-horizontal" id="defaultAd" aria-label="Advertisement">
       <span class="ad-placement-placeholder">AdSense horizontal slot preview<br><span class="note">Live ad will appear here after deployment.</span></span>
     </div>
 
     <div class="card result" id="costResult">
-      <details class="cost-accordion" open>
+      <div class="contractor-report-header" id="contractorReportHeader"></div>
+      <details class="cost-accordion estimate-overview" open>
         <summary>
           <span class="cost-accordion-label">Estimated total cost</span>
           <span class="big" id="totalCost"></span>
@@ -224,7 +462,7 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
         </div>
       </details>
 
-      <h3>Steel and cement summary</h3>
+      <h2 class="result-section-title">Materials overview</h2>
       <div class="material-summary" aria-label="Estimated steel and cement quantities">
         <div class="material-summary-item">
           <div class="note">Cement</div>
@@ -238,26 +476,37 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
         </div>
       </div>
 
-      <h3>Cost breakdown</h3>
+      <h2 class="result-section-title">Cost breakdown</h2>
       <div class="breakdown-layout" id="breakdown"></div>
 
-      <h3>Material quantities (rule of thumb)</h3>
+      <section class="room-report" id="roomReport" hidden aria-live="polite">
+        <h2 class="result-section-title">Room-wise cost report</h2>
+        <table>
+          <thead><tr><th>Room / area</th><th>Area (sq ft)</th><th>Estimated cost</th></tr></thead>
+          <tbody id="roomReportRows"></tbody>
+        </table>
+        <p class="note">Room costs are proportional estimates based on the selected construction rate, not separate contractor quotes.</p>
+      </section>
+
+      <h2 class="result-section-title">Material quantities (rule of thumb)</h2>
+      <p class="note">Enter local rates to estimate material costs. These are a separate estimate and are not added to the construction total.</p>
       <table>
-        <thead><tr><th>Material</th><th>Approx. quantity</th></tr></thead>
+        <thead><tr><th>Material</th><th>Approx. quantity</th><th>Rate (₹ / unit)</th><th>Estimated cost</th></tr></thead>
         <tbody id="materials"></tbody>
+        <tfoot>
+          <tr id="materialsSubtotal" hidden><th colspan="3">Subtotal for materials with rates entered</th><th id="materialsTotal"></th></tr>
+        </tfoot>
       </table>
+      <p class="note material-rate-error" id="materialRateError" role="status"></p>
       <div class="row" style="margin-top:12px">
         <button class="print-button" onclick="window.print()">Print / save as PDF</button>
+        <button class="print-button" type="button" id="contractorPdf">Create contractor PDF</button>
       </div>
       <div class="ad ad-horizontal" id="resultAd" aria-label="Advertisement">
         <span class="ad-placement-placeholder">AdSense horizontal slot preview<br><span class="note">Live ad will appear here after deployment.</span></span>
       </div>
     </div>
 
-    <div class="premium">
-      <h3>Premium (coming soon)</h3>
-      <div class="note">Detailed room-wise report, editable rates by material, branded PDF for contractors, saved projects.</div>
-    </div>
   </section>
 
   <!-- PAINT -->
@@ -298,12 +547,28 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
     <div class="card result" id="tileResult"></div>
   </section>
   </div>
-  <div class="ad-sidebar-space" aria-hidden="true"></div>
+  <aside class="estimate-summary" id="estimateSummary" aria-labelledby="estimateSummaryHeading">
+    <h2 id="estimateSummaryHeading">Your estimate</h2>
+    <p class="note">Indicative estimate, not a quotation</p>
+    <p class="estimate-summary-placeholder" id="estimateSummaryPlaceholder">Enter your project details, then calculate to see an indicative construction estimate.</p>
+    <div id="estimateSummaryContent" hidden aria-live="polite">
+      <div class="estimate-summary-total" id="summaryTotal">—</div>
+      <div class="estimate-summary-range" id="summaryRange"></div>
+      <div class="estimate-summary-metrics">
+        <div class="estimate-summary-metric"><span>Total built-up area</span><strong id="summaryArea">—</strong></div>
+        <div class="estimate-summary-metric"><span>Effective rate</span><strong id="summaryRate">—</strong></div>
+      </div>
+      <p class="estimate-summary-note">Planning estimate only. Actual costs and quantities depend on drawings, structural design, specifications, site conditions, local rates, and contractor scope.</p>
+    </div>
+    <button class="primary" type="button" id="calcCostSummary">Calculate estimate</button>
+  </aside>
   </div>
 </main>
 
 <footer>
   <p><strong>Disclaimer:</strong> Results are rough planning estimates based on typical Indian rates and rule-of-thumb quantities. Actual cost varies by city, design, soil, material prices and labour. Get quotes from local contractors before deciding.</p>
+  <p>Developed by Vika Solutions.</p>
+  <p>© 2026 Vika Solutions. All rights reserved.</p>
 </footer>
 
 <script>
@@ -313,12 +578,164 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
   var inr = new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0});
   var num = new Intl.NumberFormat("en-IN",{maximumFractionDigits:0});
   var num1 = new Intl.NumberFormat("en-IN",{maximumFractionDigits:1});
+  var customSelectSync = new WeakMap();
+  var customSelectId = 0;
+  function initializeCustomSelect(select){
+    if(customSelectSync.has(select)){return;}
+    var wrapper = document.createElement("div");
+    wrapper.className = "custom-select";
+    wrapper.setAttribute("aria-expanded","false");
+
+    var trigger = document.createElement("button");
+    trigger.type = "button";
+    trigger.className = "custom-select-trigger";
+    trigger.setAttribute("role","combobox");
+    trigger.setAttribute("aria-haspopup","listbox");
+    trigger.setAttribute("aria-expanded","false");
+
+    var labels = select.labels;
+    if(labels && labels.length){
+      if(!labels[0].id){labels[0].id = "custom-select-label-" + (++customSelectId);}
+      trigger.setAttribute("aria-labelledby",labels[0].id);
+    }else{
+      trigger.setAttribute("aria-label",select.getAttribute("aria-label") || select.id);
+    }
+
+    var value = document.createElement("span");
+    value.className = "custom-select-value";
+    var arrow = document.createElement("span");
+    arrow.className = "custom-select-arrow";
+    arrow.setAttribute("aria-hidden","true");
+    trigger.appendChild(value);
+    trigger.appendChild(arrow);
+
+    var listbox = document.createElement("div");
+    var listboxId = "custom-select-list-" + (++customSelectId);
+    listbox.id = listboxId;
+    listbox.className = "custom-select-options";
+    listbox.setAttribute("role","listbox");
+    listbox.hidden = true;
+    trigger.setAttribute("aria-controls",listboxId);
+
+    var activeIndex = -1;
+    var typeahead = "";
+    var typeaheadTimer;
+    function options(){return Array.prototype.slice.call(listbox.querySelectorAll('[role="option"]'));}
+    function setOpen(open){
+      wrapper.setAttribute("aria-expanded",String(open));
+      trigger.setAttribute("aria-expanded",String(open));
+      listbox.hidden = !open;
+      if(open){
+        var current = options().findIndex(function(option){return option.getAttribute("aria-selected") === "true";});
+        setActive(current >= 0 ? current : 0);
+      }else{
+        activeIndex = -1;
+        trigger.removeAttribute("aria-activedescendant");
+      }
+    }
+    function setActive(index){
+      var items = options();
+      if(!items.length){activeIndex = -1; return;}
+      activeIndex = Math.max(0,Math.min(index,items.length - 1));
+      items.forEach(function(option,i){option.classList.toggle("is-active",i === activeIndex);});
+      trigger.setAttribute("aria-activedescendant",items[activeIndex].id);
+      items[activeIndex].scrollIntoView({block:"nearest"});
+    }
+    function sync(){
+      var selected = select.selectedOptions[0];
+      value.textContent = selected ? selected.textContent.trim() : "";
+      listbox.textContent = "";
+      Array.prototype.forEach.call(select.options,function(option,index){
+        var item = document.createElement("div");
+        item.id = listboxId + "-option-" + index;
+        item.className = "custom-select-option";
+        item.setAttribute("role","option");
+        item.setAttribute("aria-selected",String(option.selected));
+        item.setAttribute("aria-disabled",String(option.disabled));
+        item.textContent = option.textContent.trim();
+        item.addEventListener("pointerdown",function(event){event.preventDefault();});
+        item.addEventListener("click",function(){
+          if(option.disabled){return;}
+          select.value = option.value;
+          select.dispatchEvent(new Event("change",{bubbles:true}));
+          sync();
+          setOpen(false);
+          trigger.focus();
+        });
+        listbox.appendChild(item);
+      });
+    }
+    function chooseActive(){
+      var items = options();
+      if(activeIndex < 0 || !items[activeIndex]){return;}
+      items[activeIndex].click();
+    }
+    trigger.addEventListener("click",function(){setOpen(listbox.hidden);});
+    trigger.addEventListener("keydown",function(event){
+      var items = options();
+      if(event.key === "ArrowDown" || event.key === "ArrowUp"){
+        event.preventDefault();
+        if(listbox.hidden){
+          setOpen(true);
+          if(event.key === "ArrowUp"){setActive(items.length - 1);}
+        }else if(items.length){
+          var next = activeIndex + (event.key === "ArrowDown" ? 1 : -1);
+          setActive((next + items.length) % items.length);
+        }
+      }else if(event.key === "Home" && !listbox.hidden){
+        event.preventDefault();setActive(0);
+      }else if(event.key === "End" && !listbox.hidden){
+        event.preventDefault();setActive(items.length - 1);
+      }else if((event.key === "Enter" || event.key === " ") && !listbox.hidden){
+        event.preventDefault();chooseActive();
+      }else if(event.key === "Escape" && !listbox.hidden){
+        event.preventDefault();setOpen(false);
+      }else if(event.key === "Tab" && !listbox.hidden){
+        setOpen(false);
+      }else if(event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey){
+        typeahead += event.key.toLocaleLowerCase();
+        window.clearTimeout(typeaheadTimer);
+        typeaheadTimer = window.setTimeout(function(){typeahead = "";},700);
+        var matchIndex = items.findIndex(function(item){
+          return item.textContent.trim().toLocaleLowerCase().startsWith(typeahead);
+        });
+        if(matchIndex >= 0){
+          if(listbox.hidden){setOpen(true);}
+          setActive(matchIndex);
+        }
+      }
+    });
+    document.addEventListener("pointerdown",function(event){
+      if(!wrapper.contains(event.target)){setOpen(false);}
+    });
+    select.addEventListener("change",sync);
+    var observer = new MutationObserver(sync);
+    observer.observe(select,{childList:true,subtree:true,attributes:true,attributeFilter:["label","value","disabled","selected"]});
+    select.classList.add("native-select-source");
+    select.tabIndex = -1;
+    select.setAttribute("aria-hidden","true");
+    select.parentNode.insertBefore(wrapper,select.nextSibling);
+    wrapper.appendChild(trigger);
+    wrapper.appendChild(listbox);
+    customSelectSync.set(select,sync);
+    sync();
+  }
+  function syncCustomSelects(){
+    document.querySelectorAll("select").forEach(initializeCustomSelect);
+    document.querySelectorAll("select").forEach(function(select){
+      var sync = customSelectSync.get(select);
+      if(sync){sync();}
+    });
+  }
+  syncCustomSelects();
 
   // Add your AdSense publisher ID and ad unit slot IDs to activate ads.
   var ADSENSE_CONFIG = {
     publisherId:"ca-pub-3875642376420561",
     resultSlotId:"4729874457"
   };
+  var isLocalPreview = location.protocol !== "http:" && location.protocol !== "https:" ||
+    location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname === "::1";
   var adsenseScriptLoaded = false;
   function setupAd(element, slotId, format){
     if(!element || !/^\d+$/.test(slotId) || element.classList.contains("ad-active")){return;}
@@ -344,10 +761,10 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
     script.onerror=function(){console.error("Google AdSense script failed to load.");};
     document.head.appendChild(script);
   }
-  if(location.protocol === "http:" || location.protocol === "https:"){
-    setupAd($("defaultAd"),ADSENSE_CONFIG.resultSlotId,"auto");
-  }else{
+  if(isLocalPreview){
     $("defaultAd").classList.add("ad-preview");
+  }else{
+    setupAd($("defaultAd"),ADSENSE_CONFIG.resultSlotId,"auto");
   }
   // ---- Editable assumptions (update these as market rates change) ----
   var BASE_RATE = {basic:1700, standard:2100, premium:2900}; // ₹ per sq ft, Tier 2
@@ -367,15 +784,36 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
   ];
   // per sq ft of built-up area (rule of thumb)
   var MATERIAL = {cement:0.4, steel:4, sand:1.3, aggregate:1.35, bricks:8};
+  var MATERIAL_ITEMS = [
+    {key:"cement",name:"Cement",unit:"bags (50 kg)",rateLabel:"Cement rate per 50 kg bag"},
+    {key:"steel",name:"Steel (TMT)",unit:"kg",rateLabel:"Steel rate per kg"},
+    {key:"sand",name:"Sand",unit:"cu ft",rateLabel:"Sand rate per cubic foot"},
+    {key:"aggregate",name:"Aggregate (coarse)",unit:"cu ft",rateLabel:"Aggregate rate per cubic foot"},
+    {key:"bricks",name:"Bricks",unit:"nos",rateLabel:"Brick rate per piece"}
+  ];
+  var materialRates = {};
+  var contractorLogoData = "";
+  var PROJECT_STORAGE_KEY = "constructionCalculator.savedProjects.v1";
 
   // ---- Calculator selection ----
   $("calculatorType").addEventListener("change", function(){
+    var isCostCalculator = $("calculatorType").value === "cost";
     ["cost","paint","tile"].forEach(function(name){
       $("tab-"+name).classList.toggle("hide", name !== $("calculatorType").value);
     });
+    document.querySelector(".page-layout").classList.toggle("construction-layout", isCostCalculator);
+    $("estimateSummary").hidden = !isCostCalculator;
   });
 
   function val(id){var v = parseFloat($(id).value); return isFinite(v) ? v : 0;}
+  function updateBuiltUpPreview(){
+    var area = val("area");
+    var floors = Math.max(1, Math.round(val("floors")));
+    $("builtUpPreview").textContent = area > 0
+      ? "Total built-up area (before stilt parking): " + num.format(area * floors) + " sq ft"
+      : "Enter a valid area and floor count to preview the total built-up area.";
+  }
+  updateBuiltUpPreview();
 
   window.addEventListener("beforeprint", function(){
     document.querySelectorAll(".calculator-inputs .grid > div").forEach(function(field){
@@ -411,12 +849,300 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
   });
   ["area","floors","tier","rate","parking"].forEach(function(id){
     $(id).addEventListener("input", function(){
+      if(id === "area" || id === "floors"){updateBuiltUpPreview();}
       if($("costResult").style.display === "block"){calculateCost(false, false);}
     });
     $(id).addEventListener("change", function(){
+      if(id === "area" || id === "floors"){updateBuiltUpPreview();}
       if($("costResult").style.display === "block"){calculateCost(false, false);}
     });
   });
+
+  var roomRowCount = 0;
+  function addRoomRow(name, area){
+    var row = document.createElement("div");
+    row.className = "room-row";
+    var nameField = document.createElement("div");
+    var nameId = "roomName-" + (++roomRowCount);
+    var nameLabel = document.createElement("label");
+    nameLabel.htmlFor = nameId;
+    nameLabel.textContent = "Room name";
+    var nameInput = document.createElement("input");
+    nameInput.id = nameId;
+    nameInput.type = "text";
+    nameInput.maxLength = 60;
+    nameInput.placeholder = "e.g. Living room";
+    nameInput.value = name || "";
+    nameField.appendChild(nameLabel);
+    nameField.appendChild(nameInput);
+
+    var areaField = document.createElement("div");
+    var areaId = "roomArea-" + nameId.slice("roomName-".length);
+    var areaLabel = document.createElement("label");
+    areaLabel.htmlFor = areaId;
+    areaLabel.textContent = "Area (sq ft)";
+    var areaInput = document.createElement("input");
+    areaInput.id = areaId;
+    areaInput.type = "number";
+    areaInput.min = "0";
+    areaInput.step = "any";
+    areaInput.placeholder = "e.g. 180";
+    areaInput.value = area || "";
+    areaField.appendChild(areaLabel);
+    areaField.appendChild(areaInput);
+
+    var remove = document.createElement("button");
+    remove.className = "ghost";
+    remove.type = "button";
+    remove.textContent = "Remove";
+    remove.setAttribute("aria-label", "Remove room");
+    remove.addEventListener("click", function(){
+      row.remove();
+      $("roomError").textContent = "";
+      if($("costResult").style.display === "block"){calculateCost(false, false);}
+    });
+    [nameInput, areaInput].forEach(function(input){
+      input.addEventListener("input", function(){
+        $("roomError").textContent = "";
+        if($("costResult").style.display === "block"){calculateCost(false, false);}
+      });
+    });
+    row.appendChild(nameField);
+    row.appendChild(areaField);
+    row.appendChild(remove);
+    $("roomRows").appendChild(row);
+  }
+  $("addRoom").addEventListener("click", function(){addRoomRow("", "");});
+
+  function setProjectStatus(message, isError){
+    var status = $("projectStatus");
+    status.textContent = message;
+    status.classList.toggle("room-error", Boolean(isError));
+  }
+
+  function readSavedProjects(){
+    var saved = localStorage.getItem(PROJECT_STORAGE_KEY);
+    if(saved === null){return [];}
+    var projects = JSON.parse(saved);
+    if(!Array.isArray(projects) || projects.some(function(project){
+      return !project || typeof project.id !== "string" || typeof project.name !== "string" ||
+        !project.inputs || typeof project.inputs !== "object" || !Array.isArray(project.rooms) ||
+        !project.materialRates || typeof project.materialRates !== "object";
+    })){
+      throw new Error("Saved project data is invalid. Clear the saved projects from this browser to continue.");
+    }
+    return projects;
+  }
+
+  function refreshSavedProjects(selectedId){
+    var selector = $("savedProjects");
+    selector.textContent = "";
+    var emptyOption = document.createElement("option");
+    emptyOption.value = "";
+    emptyOption.textContent = "Select a saved project";
+    selector.appendChild(emptyOption);
+    try{
+      readSavedProjects().forEach(function(project){
+        var option = document.createElement("option");
+        option.value = project.id;
+        option.textContent = project.name;
+        selector.appendChild(option);
+      });
+      if(selectedId){selector.value = selectedId;}
+    }catch(error){
+      setProjectStatus("Could not read saved projects: "+error.message, true);
+    }
+    syncCustomSelects();
+  }
+
+  var projectInputIds = [
+    "area","floors","finish","tier","rate","parking","reportProject","reportClient",
+    "reportLocation","contractorName","contractorPhone","contractorEmail","contractorAddress","reportDate"
+  ];
+  var today = new Date();
+  $("reportDate").value = today.getFullYear()+"-"+String(today.getMonth()+1).padStart(2,"0")+"-"+String(today.getDate()).padStart(2,"0");
+  $("saveProject").addEventListener("click", function(){
+    $("saveProjectName").value = "";
+    $("saveProjectDialog").showModal();
+    $("saveProjectName").focus();
+  });
+  $("cancelSaveProject").addEventListener("click", function(){
+    $("saveProjectDialog").close();
+  });
+  $("saveProjectForm").addEventListener("submit", function(event){
+    event.preventDefault();
+    var name = $("saveProjectName").value.trim();
+    if(!name){
+      setProjectStatus("Enter a project name to save.",true);
+      $("saveProjectName").focus();
+      return;
+    }
+    if(name.length > 80){
+      setProjectStatus("Project names must be 80 characters or fewer.",true);
+      return;
+    }
+    $("projectName").value = name;
+    try{
+      var projects = readSavedProjects();
+      var project = {
+        id:Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8),
+        name:name,
+        savedAt:new Date().toISOString(),
+        inputs:{},
+        rooms:Array.prototype.map.call($("roomRows").querySelectorAll(".room-row"),function(row){
+          return {
+            name:row.querySelector('input[type="text"]').value,
+            area:row.querySelector('input[type="number"]').value
+          };
+        }),
+        materialRates:materialRates,
+        contractorLogoData:contractorLogoData
+      };
+      projectInputIds.forEach(function(id){project.inputs[id]=$(id).value;});
+      projects.push(project);
+      localStorage.setItem(PROJECT_STORAGE_KEY,JSON.stringify(projects));
+      refreshSavedProjects(project.id);
+      $("saveProjectDialog").close();
+      setProjectStatus("Project saved in this browser.",false);
+    }catch(error){
+      setProjectStatus("Could not save project: "+error.message,true);
+    }
+  });
+
+  $("loadProject").addEventListener("click", function(){
+    if(!$("savedProjects").value){
+      setProjectStatus("Choose a saved project to load.",true);
+      return;
+    }
+    try{
+      var project = readSavedProjects().find(function(item){return item.id === $("savedProjects").value;});
+      if(!project){throw new Error("The selected project could not be found.");}
+      $("projectName").value = project.name;
+      projectInputIds.forEach(function(id){
+        if(typeof project.inputs[id] === "string"){$(id).value = project.inputs[id];}
+      });
+      syncCustomSelects();
+      $("roomRows").textContent = "";
+      $("roomError").textContent = "";
+      project.rooms.forEach(function(room){addRoomRow(room.name,room.area);});
+      materialRates = Object.assign({},project.materialRates);
+      contractorLogoData = typeof project.contractorLogoData === "string" ? project.contractorLogoData : "";
+      $("projectTools").open = true;
+      $("reportSettings").open = true;
+      calculateCost(false,false);
+      setProjectStatus("Loaded project: "+project.name,false);
+    }catch(error){
+      setProjectStatus("Could not load project: "+error.message,true);
+    }
+  });
+
+  $("deleteProject").addEventListener("click", function(){
+    var selectedId = $("savedProjects").value;
+    if(!selectedId){
+      setProjectStatus("Choose a saved project to delete.",true);
+      return;
+    }
+    try{
+      var projects = readSavedProjects();
+      var project = projects.find(function(item){return item.id === selectedId;});
+      if(!project){throw new Error("The selected project could not be found.");}
+      if(!window.confirm('Delete saved project "'+project.name+'"?')){return;}
+      localStorage.setItem(PROJECT_STORAGE_KEY,JSON.stringify(projects.filter(function(item){return item.id !== selectedId;})));
+      refreshSavedProjects();
+      setProjectStatus("Deleted project: "+project.name,false);
+    }catch(error){
+      setProjectStatus("Could not delete project: "+error.message,true);
+    }
+  });
+  refreshSavedProjects();
+
+  function updateContractorReportHeader(){
+    var header = $("contractorReportHeader");
+    header.textContent = "";
+    if(contractorLogoData){
+      var logo = document.createElement("img");
+      logo.className = "contractor-logo";
+      logo.src = contractorLogoData;
+      logo.alt = "Contractor logo";
+      header.appendChild(logo);
+    }
+    var brand = document.createElement("div");
+    brand.className = "contractor-brand";
+    brand.textContent = $("contractorName").value.trim() || "Construction Estimate";
+    header.appendChild(brand);
+    var reportTitle = document.createElement("h2");
+    reportTitle.textContent = "House Construction Estimate";
+    header.appendChild(reportTitle);
+    var details = [
+      ["Project", $("reportProject").value.trim() || $("projectName").value.trim()],
+      ["Client", $("reportClient").value.trim()],
+      ["Location", $("reportLocation").value.trim()],
+      ["Contractor address", $("contractorAddress").value.trim()],
+      ["Report date", $("reportDate").value ? new Date($("reportDate").value+"T00:00:00").toLocaleDateString("en-IN") : ""]
+    ].filter(function(item){return item[1];});
+    var contact = [$("contractorPhone").value.trim(), $("contractorEmail").value.trim()].filter(Boolean);
+    if(contact.length){
+      var contactLine = document.createElement("p");
+      contactLine.className = "contractor-contact";
+      contactLine.textContent = contact.join(" | ");
+      header.appendChild(contactLine);
+    }
+    if(details.length){
+      var detailLine = document.createElement("p");
+      detailLine.className = "contractor-contact";
+      detailLine.textContent = details.map(function(item){return item[0]+": "+item[1];}).join(" | ");
+      header.appendChild(detailLine);
+    }
+    var rule = document.createElement("hr");
+    header.appendChild(rule);
+    var disclaimer = document.createElement("p");
+    disclaimer.className = "note";
+    disclaimer.textContent = "Planning estimate only. Actual costs and quantities vary by city, design, soil conditions, specifications, and current market rates. Confirm details with local professionals before making decisions.";
+    header.appendChild(disclaimer);
+  }
+  $("contractorPdf").addEventListener("click", function(){
+    if($("costResult").style.display !== "block"){calculateCost(true,false);}
+    if($("costResult").style.display !== "block"){return;}
+    updateContractorReportHeader();
+    document.body.classList.add("contractor-print");
+    window.print();
+  });
+  window.addEventListener("afterprint", function(){
+    document.body.classList.remove("contractor-print");
+  });
+
+  function updateMaterialSubtotal(){
+    var subtotal = 0;
+    var hasRate = false;
+    var hasInvalidRate = false;
+    MATERIAL_ITEMS.forEach(function(item){
+      var input = $("materialRate-"+item.key);
+      if(!input){return;}
+      var value = input.value.trim();
+      var output = $("materialCost-"+item.key);
+      var valid = value !== "" && isFinite(parseFloat(value)) && parseFloat(value) >= 0;
+      $("materialRateValue-"+item.key).textContent = value ? "₹"+value : "Not set";
+      if(!value){
+        output.textContent = "—";
+        return;
+      }
+      if(!valid){
+        output.textContent = "—";
+        hasInvalidRate = true;
+        return;
+      }
+      hasRate = true;
+      var quantity = parseFloat(input.getAttribute("data-quantity"));
+      var cost = quantity * parseFloat(value);
+      subtotal += cost;
+      output.textContent = inr.format(cost);
+    });
+    $("materialsTotal").textContent = inr.format(subtotal);
+    $("materialsSubtotal").hidden = !hasRate;
+    $("materialRateError").textContent = hasInvalidRate
+      ? "Enter a valid rate of zero or more for each material."
+      : "";
+  }
 
   // ---- Cost ----
   function calculateCost(showValidation, scrollToResult){
@@ -430,31 +1156,97 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
     var baseRate = BASE_RATE[$("finish").value];
     var rate = customRate > 0 ? customRate : baseRate * tier;
     var stilt = $("parking").value === "1" ? area * 0.6 : 0;
-    var totalArea = area * floors + stilt;
+    var builtUpArea = area * floors;
+    var totalArea = builtUpArea + stilt;
     var total = totalArea * rate;
     var low = total * 0.9, high = total * 1.1;
 
+    var roomInputs = Array.prototype.slice.call($("roomRows").querySelectorAll(".room-row"));
+    var rooms = [];
+    var invalidRoom = false;
+    roomInputs.forEach(function(row){
+      var name = row.querySelector('input[type="text"]').value.trim();
+      var roomArea = parseFloat(row.querySelector('input[type="number"]').value);
+      if(!name && !row.querySelector('input[type="number"]').value.trim()){return;}
+      if(!name || !isFinite(roomArea) || roomArea <= 0){invalidRoom = true; return;}
+      rooms.push({name:name, area:roomArea});
+    });
+    var assignedRoomArea = rooms.reduce(function(sum, room){return sum + room.area;}, 0);
+    if(invalidRoom || assignedRoomArea > builtUpArea){
+      var roomMessage = invalidRoom
+        ? "Complete each room name and enter an area greater than zero."
+        : "Room areas cannot exceed the total built-up area of " + num.format(builtUpArea) + " sq ft.";
+      $("roomError").textContent = roomMessage;
+      $("roomReport").hidden = true;
+      if(showValidation){alert(roomMessage);}
+      return;
+    }
+    $("roomError").textContent = "";
+
     $("totalCost").textContent = "Approx. " + inr.format(total);
     $("costRange").textContent = "Likely range: " + inr.format(low) + " to " + inr.format(high);
+    $("summaryTotal").textContent = inr.format(total);
+    $("summaryRange").textContent = "Likely range: " + inr.format(low) + " to " + inr.format(high);
+    $("summaryArea").textContent = num.format(totalArea) + " sq ft";
+    $("summaryRate").textContent = inr.format(rate) + " / sq ft";
+    $("estimateSummaryPlaceholder").hidden = true;
+    $("estimateSummaryContent").hidden = false;
     var rateDescription = customRate > 0
       ? "Using your custom rate of " + inr.format(rate) + " per sq ft; city adjustment not applied."
       : $("finish").selectedOptions[0].text + " finish: " + inr.format(baseRate) + " × " + $("tier").selectedOptions[0].text + " = " + inr.format(rate) + " per sq ft.";
     $("costMeta").textContent = "Total built-up: " + num.format(totalArea) + " sq ft. " + rateDescription;
 
-    var chartStops = [];
-    var splitRows = SPLIT.map(function(s, i){
+    var breakdownRows = SPLIT.map(function(s, i){
       var amt = total * s[1] / 100;
-      var start = SPLIT.slice(0, i).reduce(function(sum, item){return sum + item[1]}, 0);
-      var end = start + s[1];
-      chartStops.push("var(--breakdown-"+(i+1)+") "+start+"% "+end+"%");
-      return '<tr><td><span class="breakdown-swatch breakdown-color-'+i+'" aria-hidden="true"></span>'+s[0]+'</td><td>'+s[1]+'%</td><td>'+inr.format(amt)+'</td></tr>';
+      return '<div class="breakdown-row" role="listitem"><div class="breakdown-row-top"><span class="breakdown-row-label"><span class="breakdown-swatch breakdown-color-'+i+'" aria-hidden="true"></span>'+s[0]+'</span><span class="breakdown-row-share">'+s[1]+'%</span><strong class="breakdown-row-amount">'+inr.format(amt)+'</strong></div><div class="breakdown-track" aria-hidden="true"><span style="width:'+s[1]+'%;--bar-color:var(--breakdown-'+(i+1)+')"></span></div></div>';
     }).join("");
-    var legend = SPLIT.map(function(s, i){
-      return '<div class="breakdown-legend-item"><span class="breakdown-swatch breakdown-color-'+i+'" aria-hidden="true"></span><span class="breakdown-legend-label">'+s[2]+' '+s[1]+'%</span></div>';
-    }).join("");
-    $("breakdown").innerHTML =
-      '<div><table class="breakdown-table"><thead><tr><th>Cost item</th><th>Share</th><th>Amount</th></tr></thead><tbody>'+splitRows+'</tbody></table></div>'+
-      '<div class="breakdown-chart-panel"><div class="breakdown-chart" role="img" aria-label="Pie chart of the cost breakdown" style="--chart-gradient:conic-gradient('+chartStops.join(",")+')"></div><div class="breakdown-legend" aria-label="Pie chart legend">'+legend+'</div></div>';
+    $("breakdown").innerHTML = '<div class="breakdown-list" role="list">'+breakdownRows+'</div>';
+
+    var roomReport = $("roomReport");
+    var roomReportRows = $("roomReportRows");
+    roomReportRows.textContent = "";
+    if(rooms.length){
+      var assignedCost = 0;
+      rooms.forEach(function(room){
+        var roomCost = Math.round(room.area * rate);
+        assignedCost += roomCost;
+        var row = document.createElement("tr");
+        [room.name, num.format(room.area), inr.format(roomCost)].forEach(function(value){
+          var cell = document.createElement("td");
+          cell.textContent = value;
+          row.appendChild(cell);
+        });
+        roomReportRows.appendChild(row);
+      });
+      if(assignedRoomArea < builtUpArea){
+        var sharedRow = document.createElement("tr");
+        ["Shared / unassigned area", num.format(builtUpArea - assignedRoomArea), inr.format(Math.round(builtUpArea * rate) - assignedCost)].forEach(function(value){
+          var cell = document.createElement("td");
+          cell.textContent = value;
+          sharedRow.appendChild(cell);
+        });
+        roomReportRows.appendChild(sharedRow);
+      }
+      if(stilt > 0){
+        var parkingRow = document.createElement("tr");
+        ["Stilt parking", num.format(stilt), inr.format(Math.round(stilt * rate))].forEach(function(value){
+          var cell = document.createElement("td");
+          cell.textContent = value;
+          parkingRow.appendChild(cell);
+        });
+        roomReportRows.appendChild(parkingRow);
+      }
+      var totalRow = document.createElement("tr");
+      ["Total estimated cost", "", inr.format(total)].forEach(function(value){
+        var cell = document.createElement("th");
+        cell.textContent = value;
+        totalRow.appendChild(cell);
+      });
+      roomReportRows.appendChild(totalRow);
+      roomReport.hidden = false;
+    }else{
+      roomReport.hidden = true;
+    }
 
     var m = MATERIAL;
     var cementBags = totalArea*m.cement;
@@ -462,24 +1254,69 @@ footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);fon
     $("cementSummary").textContent = "Approx. " + num.format(cementBags);
     $("steelSummary").textContent = "Approx. " + num.format(steelKg) + " kg";
     $("steelSummaryTonnes").textContent = "Approx. " + num1.format(steelKg/1000) + " tonnes";
-    var rows = [
-      ["Cement", num.format(cementBags)+" bags (50 kg)"],
-      ["Steel (TMT)", num.format(steelKg)+" kg (~"+num1.format(steelKg/1000)+" tonnes)"],
-      ["Sand", num.format(totalArea*m.sand)+" cu ft"],
-      ["Aggregate (coarse)", num.format(totalArea*m.aggregate)+" cu ft"],
-      ["Bricks", num.format(totalArea*m.bricks)+" nos"]
-    ];
-    $("materials").innerHTML = rows.map(function(r){return "<tr><td>"+r[0]+"</td><td>"+r[1]+"</td></tr>"}).join("");
+    var quantities = {
+      cement:cementBags,
+      steel:steelKg,
+      sand:totalArea*m.sand,
+      aggregate:totalArea*m.aggregate,
+      bricks:totalArea*m.bricks
+    };
+    var materialsBody = $("materials");
+    materialsBody.textContent = "";
+    MATERIAL_ITEMS.forEach(function(item){
+      var row = document.createElement("tr");
+      var nameCell = document.createElement("td");
+      nameCell.textContent = item.name;
+      var quantityCell = document.createElement("td");
+      quantityCell.textContent = num.format(quantities[item.key])+" "+item.unit+
+        (item.key === "steel" ? " (~"+num1.format(steelKg/1000)+" tonnes)" : "");
+      var rateCell = document.createElement("td");
+      var rateInput = document.createElement("input");
+      rateInput.className = "material-rate-input";
+      rateInput.type = "number";
+      rateInput.min = "0";
+      rateInput.step = "any";
+      rateInput.placeholder = "Optional";
+      rateInput.setAttribute("aria-label", item.rateLabel);
+      rateInput.setAttribute("data-quantity", quantities[item.key]);
+      rateInput.id = "materialRate-"+item.key;
+      rateInput.value = materialRates[item.key] || "";
+      var ratePrintValue = document.createElement("span");
+      ratePrintValue.className = "materials-rate-value";
+      ratePrintValue.id = "materialRateValue-"+item.key;
+      ratePrintValue.textContent = rateInput.value ? "₹"+rateInput.value : "Not set";
+      rateInput.addEventListener("input", function(){
+        materialRates[item.key] = rateInput.value;
+        updateMaterialSubtotal();
+      });
+      rateCell.appendChild(rateInput);
+      rateCell.appendChild(ratePrintValue);
+      var costCell = document.createElement("td");
+      costCell.id = "materialCost-"+item.key;
+      costCell.textContent = "—";
+      row.appendChild(nameCell);
+      row.appendChild(quantityCell);
+      row.appendChild(rateCell);
+      row.appendChild(costCell);
+      materialsBody.appendChild(row);
+    });
+    updateMaterialSubtotal();
     $("defaultAd").classList.add("hide");
     $("costResult").style.display = "block";
-    if(location.protocol === "http:" || location.protocol === "https:"){
-      setupAd($("resultAd"),ADSENSE_CONFIG.resultSlotId,"auto");
-    }else{
+    if(isLocalPreview){
       $("resultAd").classList.add("ad-preview");
+    }else{
+      setupAd($("resultAd"),ADSENSE_CONFIG.resultSlotId,"auto");
     }
-    if(scrollToResult){$("costResult").scrollIntoView({behavior:"smooth", block:"nearest"});}
+    if(scrollToResult){
+      $("costResult").scrollIntoView({
+        behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block:"nearest"
+      });
+    }
   }
   $("calcCost").addEventListener("click", function(){calculateCost(true, true);});
+  $("calcCostSummary").addEventListener("click", function(){calculateCost(true, true);});
 
   // ---- Paint ----
   $("calcPaint").addEventListener("click", function(){
