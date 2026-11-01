@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1425" height="452" viewBox="55 208 1425 452" role="img" aria-labelledby="title desc">
+  <title id="title">Vika Solutions — Crafted for What's Next</title>
+  <desc id="desc">A navy VIKA wordmark with a cyan triangular accent inside the A, SOLUTIONS beneath, and an italic tagline framed by horizontal lines.</desc>
+  <g fill="#08245f" transform="translate(-111.5 0)">
+    <!-- VIKA wordmark -->
+    <path d="M302 253 H377 L471 394 L565 253 H637 L523 432 Q506 455 471 455 Q436 455 419 432 Z"/>
+    <rect x="670" y="253" width="68" height="202"/>
+    <path d="M791 253 H856 V337 L978 253 H1068 L924 350 L1068 455 H977 L856 366 V455 H791 Z"/>
+    <!-- A as a custom geometric letter -->
+    <path d="M1065 455 L1197 253 Q1217 222 1251 222 Q1285 222 1305 253 L1457 455 H1372 L1251 274 L1138 455 Z"/>
+  </g>
+  <!-- Cyan inner counter of the A -->
+  <path d="M1164 455 L1251 342 L1341 455 Z" fill="#08c4e8" transform="translate(-111.5 0)"/>
+  <!-- SOLUTIONS -->
+  <text x="768" y="559" text-anchor="middle" fill="#08245f"
+        font-family="Montserrat, Arial, Helvetica, sans-serif" font-size="103" font-weight="400" letter-spacing="29">SOLUTIONS</text>
+  <!-- Tagline rules -->
+  <path d="M160 628 H374 M1162 628 H1376" fill="none" stroke="#08245f" stroke-width="5"/>
+  <text x="768" y="649" text-anchor="middle" fill="#405879"
+        font-family="Montserrat, Arial, Helvetica, sans-serif" font-size="61" font-style="italic" font-weight="600" letter-spacing="1.5">Crafted for What's Next</text>
+</svg>
